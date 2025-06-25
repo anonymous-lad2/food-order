@@ -1,5 +1,6 @@
 package com.happysat.request;
 
+import com.happysat.model.Address;
 import com.happysat.model.ContactInformation;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class CreateRestaurantRequest {
 
     private String cuisineType;
 
-    private String address;
+    private Address address;
 
     private ContactInformation contactInformation;
 
