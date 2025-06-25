@@ -37,7 +37,7 @@ public class AdminFoodController {
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteFood(@PathVariable Long id,
                                            @RequestHeader("Authorization") String jwt) throws Exception {
 
@@ -47,10 +47,10 @@ public class AdminFoodController {
         MessageResponse res = new MessageResponse();
         res.setMessage("food deleted successfully");
 
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Food> updateFoodAvailabilityStatus(@PathVariable Long id,
                                                       @RequestHeader("Authorization") String jwt) throws Exception {
 
@@ -58,6 +58,6 @@ public class AdminFoodController {
 
         Food food = foodService.updateAvailabilityStatus(id);
 
-        return new ResponseEntity<>(food, HttpStatus.CREATED);
+        return new ResponseEntity<>(food, HttpStatus.OK);
     }
 }
