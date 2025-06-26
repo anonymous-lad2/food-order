@@ -1,8 +1,14 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Navbar } from "./component/Navbar/Navbar";
+import DarkTheme from "./theme/DarkTheme";
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl text-red-500 font-bold underline text-center">Hello world!</h1>
-    </div>
+    
+    <ThemeProvider theme={DarkTheme}>
+      <CssBaseline />
+      <Navbar />
+    </ThemeProvider>
   );
 }
 
