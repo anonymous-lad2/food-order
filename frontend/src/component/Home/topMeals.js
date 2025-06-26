@@ -1,0 +1,17 @@
+export const topMeals = [
+  { id: 1,  title: "Pepperoni Pizza",        image: "https://cdn.pixabay.com/photo/2020/10/17/11/06/pizza-5661748_1280.jpg" },
+  { id: 2,  title: "Margherita Pizza",        image: "https://cdn.pixabay.com/photo/2023/05/28/14/13/ai-generated-8023787_1280.jpg" },
+  { id: 3,  title: "Vegetable Pizza",         image: "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" },
+  { id: 4,  title: "Cheese Pizza Slice",       image: "https://cdn.pixabay.com/photo/2024/08/04/00/36/ai-generated-8943359_1280.jpg" },
+  { id: 5,  title: "Classic Cheeseburger",     image: "https://cdn.pixabay.com/photo/2023/05/07/17/31/ai-generated-7976795_1280.jpg" },
+  { id: 6,  title: "Bacon Double Burger",      image: "https://cdn.pixabay.com/photo/2024/09/16/06/26/hamburger-9050530_1280.png" },
+  { id: 7,  title: "Burger with Fries",        image: "https://cdn.pixabay.com/photo/2022/08/31/10/16/hamburger-7422961_1280.jpg" },
+  { id: 8,  title: "Sushi Roll",               image: "https://cdn.pixabay.com/photo/2023/11/13/12/31/korean-food-8385414_1280.jpg" },
+  { id: 9,  title: "Salmon Nigiri",            image: "https://cdn.pixabay.com/photo/2014/05/26/14/53/sushi-354628_1280.jpg" },
+  { id: 10, title: "Tacos Al Pastor",          image: "https://cdn.pixabay.com/photo/2019/07/21/01/36/tacos-al-pastor-4351813_1280.jpg" },
+  { id: 11, title: "Fish Tacos",               image: "https://cdn.pixabay.com/photo/2023/06/20/10/05/tacos-8076612_1280.jpg" },
+  { id: 12, title: "French Fries",             image: "https://cdn.pixabay.com/photo/2024/01/23/08/11/ai-generated-8527044_1280.jpg" },
+  { id: 13, title: "Loaded Nachos",            image: "https://cdn.pixabay.com/photo/2024/08/14/20/33/food-8969672_1280.jpg" },
+  { id: 14, title: "Chicken Wings",            image: "https://cdn.pixabay.com/photo/2016/07/31/18/00/chicken-1559579_1280.jpg" },
+  { id: 15, title: "Caesar Salad",             image: "https://cdn.pixabay.com/photo/2025/04/25/02/50/ai-generated-9557173_1280.jpg" },
+];
