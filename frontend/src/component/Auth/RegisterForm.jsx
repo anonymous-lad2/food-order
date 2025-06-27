@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { useDispatch } from "react-redux";
+import { registerUser } from "../State/Authentication/Action";
 
 const initialValues = {
   fullName: "",
@@ -15,8 +17,10 @@ const initialValues = {
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
+    dispatch(registerUser({userData:values, navigate}))
     console.log("form values: ",values)
   };
   return (
