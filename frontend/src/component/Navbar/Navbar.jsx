@@ -4,8 +4,11 @@ import { Avatar, Badge, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import "./Navbar.css";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="sticky top-0 px-5 z-50 py-[.8rem] bg-[#e91e63] lg:px-20 flex justify-between">
       <div className="lg:mr-10 cursor-pointer flex items-center space-x-4">
@@ -21,7 +24,10 @@ export const Navbar = () => {
             </IconButton>
         </div>
         <div className=''>
-            <Avatar sx={{bgcolor: "white", color: pink.A400}}>S</Avatar>
+            {false ? <Avatar sx={{bgcolor: "white", color: pink.A400}}>S</Avatar> :
+            <IconButton onClick={() => navigate("/account/login")}>
+              <AccountCircleIcon/>
+            </IconButton>}
         </div>
         <div>
             <IconButton>
