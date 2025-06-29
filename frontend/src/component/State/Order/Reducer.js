@@ -20,13 +20,13 @@ export const orderReducer = (state= initialState, action) => {
                 ...state,
                 error: null,
                 loading: false,
-                orders: payload
+                orders: action.payload
             }
 
         case GET_USERS_ORDER_FAILURE:
             return{
                 ...state,
-                error: payload,
+                error: action.payload,
                 loading: false
             }
 
