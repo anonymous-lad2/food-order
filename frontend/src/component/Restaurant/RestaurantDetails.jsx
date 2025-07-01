@@ -14,6 +14,7 @@ import MenuCard from "./MenuCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRestaurantById, getRestaurantsCategory } from "../State/Restaurant/Action";
+import { getMenuItemsByRestaurantId } from "../State/Menu/Action";
 
 const categories = ["pizza", "burger", "panner", "rice", "icecream"];
 
@@ -32,12 +33,18 @@ const RestaurantDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const { restaurant, categorie } = useSelector((store) => store);
+  const { restaurant, menu } = useSelector((store) => store);
   const { id } = useParams();
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleFilter = (e) => {
     setFoodType(e.target.value);
     console.log("Filter Changed:", e.target.name, e.target.value);
+  };
+
+  const handleFilterCategory = (e, value) => {
+    setSelectedCategory(value)
+    console.log("Filter Changed category:", e.target.name, e.target.value);
   };
 
   console.log("restaurant detail ",restaurant);
@@ -46,6 +53,11 @@ const RestaurantDetails = () => {
     dispatch(getRestaurantById({ jwt, restaurantId: id }));
     dispatch(getRestaurantsCategory({ jwt, restaurantId: id }))
   }, [dispatch, jwt, id]);
+
+  useEffect(() => {
+    
+    dispatch(getMenuItemsByRestaurantId({jwt, restaurantId: id, vegetarian: foodType==="vegetarian", seasonal: foodType==="seasonal", nonveg: foodType==="non_vegetarian", foodCategory:selectedCategory}))
+  }, [selectedCategory, foodType])
 
   const images = restaurant?.restaurant?.images || [];
 
@@ -137,13 +149,13 @@ const RestaurantDetails = () => {
               <FormControl component="fieldset">
                 <RadioGroup
                   name="food_category"
-                  value={foodType}
-                  onChange={handleFilter}
+                  value={selectedCategory}
+                  onChange={handleFilterCategory}
                 >
                   {restaurant?.categories.map((item) => (
                     <FormControlLabel
                       key={item}
-                      value={item}
+                      value={item.name}
                       control={<Radio />}
                       label={item.name}
                     />
@@ -156,8 +168,8 @@ const RestaurantDetails = () => {
 
         {/* Menu */}
         <div className="space-y-5 lg:w-[80%] lg:pl-10">
-          {menu.map((item, index) => (
-            <MenuCard key={index} />
+          {menu?.menuItems.map((item, index) => (
+            <MenuCard key={index} item={item}/>
           ))}
         </div>
       </section>

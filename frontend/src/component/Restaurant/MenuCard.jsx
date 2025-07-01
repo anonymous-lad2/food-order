@@ -4,6 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { categorizeIngredients } from "../../utils/categorizeIngredients";
 
 const ingredients = [
     {
@@ -31,7 +32,7 @@ const demo = [
     },
 ]
 
-const MenuCard = () => {
+const MenuCard = ({item}) => {
 
     const handleCheckBoxChange = (ingredient) => {
         console.log(ingredient);
@@ -49,13 +50,17 @@ const MenuCard = () => {
                 <div className="lg:flex items-center lg:gap-5">
                      <img
                         className="w-[7rem] h-[7rem] object-cover"
-                        src="http://res.cloudinary.com/dcpesbd8q/image/upload/v1708317657/no8xfzdhsrdy4ezmcczr.jpg"
+                        src={item?.images[0]}
                         alt=""
                     />
                     <div className="space-y-1 lg:space-y-5 lg:max-w-2xl">
-                        <p className="font-semibold text-xl">Burger</p>
-                        <p>₹499</p>
-                        <p className="text-gray-400">A hamburger or simply burger is a food consisting of fillings--usually a patty of ground meat typically beef--placed inside a bun.</p>
+                        <p className="font-semibold text-xl">
+                            {item?.name}
+                        </p>
+                        <p>₹{item?.price}</p>
+                        <p className="text-gray-400">
+                            {item?.description}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -65,12 +70,12 @@ const MenuCard = () => {
           <form>
             <div className="flex gap-5 flex-wrap">
                 {
-                    demo.map((item) => (
+                    Object.keys(categorizeIngredients(item.ingredients)).map((category) => (
                         <div>
-                            <p>{item.category}</p>
+                            <p>{category}</p>
                             <FormGroup>
-                                {item.ingredients.map((ingredient) => (
-                                    <FormControlLabel control={<Checkbox onChange={() => handleCheckBoxChange(ingredient)}/>} label={ingredient} />
+                                {categorizeIngredients(item.ingredients)[category].map((item) => (
+                                    <FormControlLabel key={item.name} control={<Checkbox onChange={() => handleCheckBoxChange(item)}/>} label={item.name} />
                                 ))}
                             </FormGroup>
                         </div>
