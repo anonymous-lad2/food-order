@@ -13,10 +13,10 @@ export const findCart = (token) => {
                     }
                 }
             )
-            dispatch({type: FIND_CART_SUCCESS, Payload: data})
+            dispatch({type: FIND_CART_SUCCESS, payload: data})
             console.log("find cart ",data)
         } catch(error){
-            dispatch({type: FIND_CART_FAILURE, Payload: error})
+            dispatch({type: FIND_CART_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
@@ -33,10 +33,10 @@ export const getAllCartItems = (reqData) => {
                     }
                 }
             )
-            dispatch({type: GET_ALL_CART_ITEMS_SUCCESS, Payload: data})
+            dispatch({type: GET_ALL_CART_ITEMS_SUCCESS, payload: data})
             console.log("get cart item ",data)
         } catch(error){
-            dispatch({type: GET_ALL_CART_ITEMS_FAILURE, Payload: error})
+            dispatch({type: GET_ALL_CART_ITEMS_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
@@ -54,10 +54,10 @@ export const addItemToCart = (reqData) => {
                     }
                 }
             )
-            dispatch({type: ADD_ITEM_TO_CART_SUCCESS, Payload: data})
+            dispatch({type: ADD_ITEM_TO_CART_SUCCESS, payload: data})
             console.log("add cart item ",data)
         } catch(error){
-            dispatch({type: ADD_ITEM_TO_CART_FAILURE, Payload: error})
+            dispatch({type: ADD_ITEM_TO_CART_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
@@ -75,10 +75,10 @@ export const updateCartItem = (reqData) => {
                     }
                 }
             )
-            dispatch({type: UPDATE_CARTITEM_SUCCESS, Payload: data})
+            dispatch({type: UPDATE_CARTITEM_SUCCESS, payload: data})
             console.log("update cart item ",data)
         } catch(error){
-            dispatch({type: UPDATE_CARTITEM_FAILURE, Payload: error})
+            dispatch({type: UPDATE_CARTITEM_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
@@ -96,10 +96,10 @@ export const removeCartItem = ({cartItemId, jwt}) => {
                     }
                 }
             )
-            dispatch({type: REMOVE_CARTITEM_SUCCESS, Payload: data})
+            dispatch({type: REMOVE_CARTITEM_SUCCESS, payload: data})
             console.log("remove cart item ",data)
         } catch(error){
-            dispatch({type: REMOVE_CARTITEM_FAILURE, Payload: error})
+            dispatch({type: REMOVE_CARTITEM_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
@@ -118,10 +118,10 @@ export const clearCartAction = () => {
                     }
                 }
             )
-            dispatch({type: CLEAR_CART_SUCCESS, Payload: data})
+            dispatch({type: CLEAR_CART_SUCCESS, payload: data})
             console.log("clear cart ",data)
         } catch(error){
-            dispatch({type: CLEAR_CART_FAILURE, Payload: error})
+            dispatch({type: CLEAR_CART_FAILURE, payload: error})
             console.log("error ",error)
         }
     }
