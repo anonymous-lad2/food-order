@@ -6,7 +6,8 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { Button, Card, Box, TextField } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../State/Order/Action";
 
 export const style = {
   position: "absolute",
@@ -38,12 +39,28 @@ const items = [1, 1, 1, 1, 1];
 const Cart = () => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const {cart} = useSelector(store => store)
+  const {auth, cart} = useSelector(store => store)
   const createdOrderUsingSelectedAddress = () => {};
+  const dispatch = useDispatch();
 
 
-  const handleSubmit = (value) => {
-    console.log("formValue : ", value);
+  const handleSubmit = (values) => {
+    const data = {
+      jwt: localStorage.getItem("jwt"),
+      order: {
+        restaurantId: cart.cartItems[0].food?.restaurant.id,
+        deliveryAddress: {
+          fullName: auth.user?.fullName,
+          streetAddress: values.streetAddress,
+          city:values.city,
+          state:values.state,
+          postalCode:values.pincode,
+          country: "india"
+        }
+      }
+    }
+    dispatch(createOrder(data))
+    console.log("formValue : ", values);
   };
 
   const handleOpenAddressModal = () => {

@@ -36,7 +36,7 @@ public class OrderServiceImp implements OrderService {
     @Override
     public Order createOrder(OrderRequest order, User user) throws Exception {
 
-        Address shippingAddress = order.getDeiveryAddress();
+        Address shippingAddress = order.getDeliveryAddress();
 
         Address savedAddress = addressRepository.save(shippingAddress);
 

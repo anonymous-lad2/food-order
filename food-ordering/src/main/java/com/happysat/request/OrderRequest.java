@@ -8,5 +8,5 @@ public class OrderRequest {
 
     private Long restaurantId;
 
-    private Address deiveryAddress;
+    private Address deliveryAddress;
 }
