@@ -6,15 +6,15 @@ export const findCart = (token) => {
     return async (dispatch) => {
         dispatch({type: FIND_CART_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/cart`,{
                     headers:{
                         Authorization: `Bearer ${token}`
                     }
                 }
             )
-            dispatch({type: FIND_CART_SUCCESS, Payload: response})
-            console.log("find cart ",response)
+            dispatch({type: FIND_CART_SUCCESS, Payload: data})
+            console.log("find cart ",data)
         } catch(error){
             dispatch({type: FIND_CART_FAILURE, Payload: error})
             console.log("error ",error)
@@ -26,15 +26,15 @@ export const getAllCartItems = (reqData) => {
     return async (dispatch) => {
         dispatch({type: GET_ALL_CART_ITEMS_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/cart/${reqData.cartId}/items`,{
                     headers:{
                         Authorization: `Bearer ${reqData.token}`
                     }
                 }
             )
-            dispatch({type: GET_ALL_CART_ITEMS_SUCCESS, Payload: response})
-            console.log("get cart item ",response)
+            dispatch({type: GET_ALL_CART_ITEMS_SUCCESS, Payload: data})
+            console.log("get cart item ",data)
         } catch(error){
             dispatch({type: GET_ALL_CART_ITEMS_FAILURE, Payload: error})
             console.log("error ",error)
@@ -46,7 +46,7 @@ export const addItemToCart = (reqData) => {
     return async (dispatch) => {
         dispatch({type: ADD_ITEM_TO_CART_REQUEST})
         try{
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/cart/add`,
                 reqData.cartItem, {
                     headers:{
@@ -54,8 +54,8 @@ export const addItemToCart = (reqData) => {
                     }
                 }
             )
-            dispatch({type: ADD_ITEM_TO_CART_SUCCESS, Payload: response})
-            console.log("add cart item ",response)
+            dispatch({type: ADD_ITEM_TO_CART_SUCCESS, Payload: data})
+            console.log("add cart item ",data)
         } catch(error){
             dispatch({type: ADD_ITEM_TO_CART_FAILURE, Payload: error})
             console.log("error ",error)
@@ -67,7 +67,7 @@ export const updateCartItem = (reqData) => {
     return async (dispatch) => {
         dispatch({type: UPDATE_CARTITEM_REQUEST})
         try{
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/cart-item/update`,
                 reqData.data, {
                     headers:{
@@ -75,8 +75,8 @@ export const updateCartItem = (reqData) => {
                     }
                 }
             )
-            dispatch({type: UPDATE_CARTITEM_SUCCESS, Payload: response})
-            console.log("update cart item ",response)
+            dispatch({type: UPDATE_CARTITEM_SUCCESS, Payload: data})
+            console.log("update cart item ",data)
         } catch(error){
             dispatch({type: UPDATE_CARTITEM_FAILURE, Payload: error})
             console.log("error ",error)
@@ -88,7 +88,7 @@ export const removeCartItem = ({cartItemId, jwt}) => {
     return async (dispatch) => {
         dispatch({type: REMOVE_CARTITEM_REQUEST})
         try{
-            const { response } = await api.delete(
+            const { data } = await api.delete(
                 `/api/cart-item/${cartItemId}/remove`,
                 {
                     headers:{
@@ -96,8 +96,8 @@ export const removeCartItem = ({cartItemId, jwt}) => {
                     }
                 }
             )
-            dispatch({type: REMOVE_CARTITEM_SUCCESS, Payload: response})
-            console.log("remove cart item ",response)
+            dispatch({type: REMOVE_CARTITEM_SUCCESS, Payload: data})
+            console.log("remove cart item ",data)
         } catch(error){
             dispatch({type: REMOVE_CARTITEM_FAILURE, Payload: error})
             console.log("error ",error)
@@ -109,7 +109,7 @@ export const clearCartAction = () => {
     return async (dispatch) => {
         dispatch({type: CLEAR_CART_REQUEST})
         try{
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/cart/clear`,
                 {},
                 {
@@ -118,8 +118,8 @@ export const clearCartAction = () => {
                     }
                 }
             )
-            dispatch({type: CLEAR_CART_SUCCESS, Payload: response})
-            console.log("clear cart ",response)
+            dispatch({type: CLEAR_CART_SUCCESS, Payload: data})
+            console.log("clear cart ",data)
         } catch(error){
             dispatch({type: CLEAR_CART_FAILURE, Payload: error})
             console.log("error ",error)

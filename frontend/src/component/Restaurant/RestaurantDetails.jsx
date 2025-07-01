@@ -7,10 +7,13 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import MenuCard from "./MenuCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getRestaurantById, getRestaurantsCategory } from "../State/Restaurant/Action";
 
 const categories = ["pizza", "burger", "panner", "rice", "icecream"];
 
@@ -21,62 +24,76 @@ const foodTypes = [
   { label: "Seasonal", value: "seasonal" },
 ];
 
-const menu = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+const menu = Array(8).fill(1); // Sample data
 
 const RestaurantDetails = () => {
-    const [foodType, setFoodType] = useState("all");
+  const [foodType, setFoodType] = useState("all");
 
-    const handleFilter = (e)=>{
-        console.log(e.target.value, e.target.name);
-    }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { restaurant, categorie } = useSelector((store) => store);
+  const { id } = useParams();
+
+  const handleFilter = (e) => {
+    setFoodType(e.target.value);
+    console.log("Filter Changed:", e.target.name, e.target.value);
+  };
+
+  console.log("restaurant detail ",restaurant);
+
+  useEffect(() => {
+    dispatch(getRestaurantById({ jwt, restaurantId: id }));
+    dispatch(getRestaurantsCategory({ jwt, restaurantId: id }))
+  }, [dispatch, jwt, id]);
+
+  const images = restaurant?.restaurant?.images || [];
+
   return (
     <div className="px-5 lg:px-20">
+      {/* Breadcrumb */}
       <section>
         <h3 className="text-gray-500 py-2 mt-10">
-          Home/india/indian fast food/3
+          Home / India / Indian Fast Food / {id}
         </h3>
-        <div>
-          <Grid container spacing={2}>
-            <Grid item size={{ xs: 12 }}>
-              <img
-                className="w-full h-[40vh] object-cover"
-                src="http://res.cloudinary.com/dcpesbd8q/image/upload/v1707802815/ux3xq93xzfbqhtudigv2.jpg"
-                alt=""
-              />
-            </Grid>
-            <Grid item size={{ xs: 12, lg: 6 }}>
-              <img
-                className="w-full h-[40vh] object-cover"
-                src="http://res.cloudinary.com/dcpesbd8q/image/upload/v1707802819/cpfxroggttxg6tedfskd.jpg"
-                alt=""
-              />
-            </Grid>
-            <Grid item size={{ xs: 12, lg: 6 }}>
-              <img
-                className="w-full h-[40vh] object-cover"
-                src="http://res.cloudinary.com/dcpesbd8q/image/upload/v1707802825/dtwyuhxuawmg3qzffv84.jpg"
-                alt=""
-              />
-            </Grid>
-          </Grid>
-        </div>
 
-        <div className="pt-3 pb-5">
-          <h1 className="text-4xl font-semibold">Indian Fast Food</h1>
+        {/* Images */}
+        <Grid container spacing={2}>
+          {images.length > 0 ? (
+            images.map((img, index) => (
+              <Grid key={index} item xs={12} lg={6}>
+                <img
+                  className="w-full h-[40vh] object-cover rounded-md"
+                  src={img}
+                  alt={`restaurant-img-${index}`}
+                />
+              </Grid>
+            ))
+          ) : (
+            <Grid item xs={12}>
+              <Typography color="textSecondary" align="center">
+                No images available.
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+
+        {/* Restaurant Info */}
+        <div className="pt-5 pb-5">
+          <h1 className="text-4xl font-semibold">
+            {restaurant?.restaurant?.name || "Restaurant Name"}
+          </h1>
           <p className="text-gray-500 mt-1">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia, illo
-            ipsam eveniet maiores, qui asperiores similique consequatur natus
-            nesciunt quibusdam ducimus beatae sit optio voluptatum adipisci
-            voluptatem. Ipsum, corporis tempore!
+            {restaurant?.restaurant?.description || "Restaurant description here."}
           </p>
           <div className="space-y-3 mt-3">
             <p className="text-gray-500 flex items-center gap-3">
               <LocationOnIcon />
-              <span>India, Mumbai, Andheri West, Lokhandwala</span>
+              <span>{restaurant?.restaurant?.address[0] || "India, Mumbai, Andheri West, Lokhandwala"}</span>
             </p>
             <p className="text-gray-500 flex items-center gap-3">
               <CalendarTodayIcon />
-              <span>Mon-Sun: 9:00 AM - 9:00 PM(Today)</span>
+              <span> {restaurant?.restaurant?.openingHours || 'Mon-Sun: 9:00 AM - 9:00 PM (Today)'}</span>
             </p>
           </div>
         </div>
@@ -84,16 +101,21 @@ const RestaurantDetails = () => {
 
       <Divider />
 
-      <section className="pt-[2rem] lg:flex relative">
-        <div className="space-y-10 lg:w-[20%] filter">
+      {/* Filters and Menu */}
+      <section className="pt-8 lg:flex relative">
+        {/* Filters */}
+        <div className="space-y-10 lg:w-[20%]">
           <div className="box space-y-5 lg:sticky top-28">
             <div>
-              <Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
+              <Typography variant="h6" gutterBottom>
                 Food Type
               </Typography>
-
-              <FormControl className="py-10 space-y-5" component={"fieldset"}>
-                <RadioGroup onChange={handleFilter} name="food_type" value={foodType}>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  name="food_type"
+                  value={foodType}
+                  onChange={handleFilter}
+                >
                   {foodTypes.map((item) => (
                     <FormControlLabel
                       key={item.value}
@@ -109,18 +131,21 @@ const RestaurantDetails = () => {
             <Divider />
 
             <div>
-              <Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
+              <Typography variant="h6" gutterBottom>
                 Food Category
               </Typography>
-
-              <FormControl className="py-10 space-y-5" component={"fieldset"}>
-                <RadioGroup onChange={handleFilter} name="food_type" value={foodType}>
-                  {categories.map((item) => (
+              <FormControl component="fieldset">
+                <RadioGroup
+                  name="food_category"
+                  value={foodType}
+                  onChange={handleFilter}
+                >
+                  {restaurant?.categories.map((item) => (
                     <FormControlLabel
                       key={item}
                       value={item}
                       control={<Radio />}
-                      label={item}
+                      label={item.name}
                     />
                   ))}
                 </RadioGroup>
@@ -129,10 +154,11 @@ const RestaurantDetails = () => {
           </div>
         </div>
 
+        {/* Menu */}
         <div className="space-y-5 lg:w-[80%] lg:pl-10">
-            {menu.map((item) => (
-                <MenuCard/>
-            ))}
+          {menu.map((item, index) => (
+            <MenuCard key={index} />
+          ))}
         </div>
       </section>
     </div>

@@ -53,15 +53,35 @@ public class RestaurantServiceImp implements RestaurantService{
 
         Restaurant restaurant = findRestaurantById(restaurantId);
 
-        if(restaurant.getCuisineType() != null){
+        if (updateRestaurant.getCuisineType() != null) {
             restaurant.setCuisineType(updateRestaurant.getCuisineType());
         }
-        if(restaurant.getDescription() != null){
+
+        if (updateRestaurant.getDescription() != null) {
             restaurant.setDescription(updateRestaurant.getDescription());
         }
-        if(restaurant.getName() != null){
+
+        if (updateRestaurant.getName() != null) {
             restaurant.setName(updateRestaurant.getName());
         }
+
+        if (updateRestaurant.getImages() != null && !updateRestaurant.getImages().isEmpty()) {
+            restaurant.setImages(updateRestaurant.getImages());
+        }
+
+        if (updateRestaurant.getOpeningHours() != null) {
+            restaurant.setOpeningHours(updateRestaurant.getOpeningHours());
+        }
+
+        if (updateRestaurant.getContactInformation() != null) {
+            restaurant.setContactInformation(updateRestaurant.getContactInformation());
+        }
+
+        if (updateRestaurant.getAddress() != null) {
+            Address updatedAddress = addressRepository.save(updateRestaurant.getAddress());
+            restaurant.setAddress(updatedAddress);
+        }
+
         return restaurantRepository.save(restaurant);
     }
 

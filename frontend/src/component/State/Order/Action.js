@@ -5,7 +5,7 @@ export const createOrder = (reqData) => {
     return async (dispatch) => {
         dispatch({type: CREATE_ORDER_REQUEST})
         try{
-            const { response } = await api.post(
+            const { data } = await api.post(
                 `/api/order`,
                 reqData.order,{
                     headers:{
@@ -13,8 +13,8 @@ export const createOrder = (reqData) => {
                     }
                 }
             )
-            dispatch({type: CREATE_ORDER_SUCCESS, payload: response})
-            console.log("create order ",response)
+            dispatch({type: CREATE_ORDER_SUCCESS, payload: data})
+            console.log("create order ",data)
         } catch(error){
             dispatch({type: CREATE_ORDER_FAILURE, payload: error})
             console.log("error ",error)
@@ -26,7 +26,7 @@ export const getUsersOrders = (jwt) => {
     return async (dispatch) => {
         dispatch({type: GET_USERS_ORDER_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/order/user`,
                 {
                     headers:{
@@ -34,8 +34,8 @@ export const getUsersOrders = (jwt) => {
                     }
                 }
             )
-            dispatch({type: GET_USERS_ORDER_SUCCESS, payload: response})
-            console.log("get order ",response)
+            dispatch({type: GET_USERS_ORDER_SUCCESS, payload: data})
+            console.log("get order ",data)
         } catch(error){
             dispatch({type: GET_USERS_ORDER_FAILURE, payload: error})
             console.log("error ",error)

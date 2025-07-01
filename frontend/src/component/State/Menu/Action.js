@@ -5,7 +5,7 @@ export const createMenuItem = ({menu, jwt}) => {
     return async(dispatch) => {
         dispatch({type: CREATE_MENU_ITEM_REQUEST})
         try{
-            const { response } = await api.post(
+            const { data } = await api.post(
                 "/api/admin/food",
                 menu, {
                     headers:{
@@ -13,8 +13,8 @@ export const createMenuItem = ({menu, jwt}) => {
                     }
                 }
             )
-            dispatch({type: CREATE_MENU_ITEM_SUCCESS, payload: response})
-            console.log("Create menu item ",response)
+            dispatch({type: CREATE_MENU_ITEM_SUCCESS, payload: data})
+            console.log("Create menu item ",data)
         } catch(error){
             dispatch({type: CREATE_MENU_ITEM_FAILURE, payload: error})
             console.log("error ",error)
@@ -26,7 +26,7 @@ export const getMenuItemsByRestaurantId = (reqData) => {
     return async(dispatch) => {
         dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/food/restaurant/${reqData.restaurantId}?vegetarian=${reqData.vegetarian}&nonveg=${reqData.nonveg}&seasonal=${reqData.seasonal}&food_category=${reqData.foodCategory}`,
                 {
                     headers:{
@@ -34,8 +34,8 @@ export const getMenuItemsByRestaurantId = (reqData) => {
                     }
                 }
             )
-            dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_SUCCESS, payload: response})
-            console.log("get menu item ",response)
+            dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+            console.log("get menu item ",data)
         } catch(error){
             dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_FAILURE, payload: error})
             console.log("error ",error)
@@ -47,7 +47,7 @@ export const searchMenuItem = ({keyword, jwt}) => {
     return async(dispatch) => {
         dispatch({type: SEARCH_MENU_ITEM_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/food/search?name=${keyword}`,
                 {
                     headers:{
@@ -55,8 +55,8 @@ export const searchMenuItem = ({keyword, jwt}) => {
                     }
                 }
             )
-            dispatch({type: SEARCH_MENU_ITEM_SUCCESS, payload: response})
-            console.log("Search menu item ",response)
+            dispatch({type: SEARCH_MENU_ITEM_SUCCESS, payload: data})
+            console.log("Search menu item ",data)
         } catch(error){
             dispatch({type: SEARCH_MENU_ITEM_FAILURE, payload: error})
             console.log("error ",error)
@@ -68,7 +68,7 @@ export const updateMenuItemAvailability = ({ foodId, jwt }) => {
     return async(dispatch) => {
         dispatch({type: UPDATE_MENU_ITEMS_AVAILABILITY_REQUEST})
         try{
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/admin/food/${foodId}`,
                 {},
                 {
@@ -77,8 +77,8 @@ export const updateMenuItemAvailability = ({ foodId, jwt }) => {
                     }
                 }
             )
-            dispatch({type: UPDATE_MENU_ITEMS_AVAILABILITY_SUCCESS, payload: response})
-            console.log("update menu item ",response)
+            dispatch({type: UPDATE_MENU_ITEMS_AVAILABILITY_SUCCESS, payload: data})
+            console.log("update menu item ",data)
         } catch(error){
             dispatch({type: UPDATE_MENU_ITEMS_AVAILABILITY_FAILURE, payload: error})
             console.log("error ",error)
@@ -90,7 +90,7 @@ export const deleteFoodAction = ({ foodId, jwt }) => {
     return async(dispatch) => {
         dispatch({type: DELETE_MENU_ITEM_REQUEST})
         try{
-            const { response } = await api.delete(
+            const { data } = await api.delete(
                 `/api/admin/food/${foodId}`,
                 {
                     headers:{
@@ -98,8 +98,8 @@ export const deleteFoodAction = ({ foodId, jwt }) => {
                     }
                 }
             )
-            dispatch({type: DELETE_MENU_ITEM_SUCCESS, payload: response})
-            console.log("delete menu item ",response)
+            dispatch({type: DELETE_MENU_ITEM_SUCCESS, payload: data})
+            console.log("delete menu item ",data)
         } catch(error){
             dispatch({type: DELETE_MENU_ITEM_FAILURE, payload: error})
             console.log("error ",error)

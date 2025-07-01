@@ -5,7 +5,7 @@ import { CREATE_INGREDIENT_CATEGORY_FAILURE, CREATE_INGREDIENT_CATEGORY_REQUEST,
 const getIngrdientOfRestaurant = ({id, jwt}) => {
     return async (dispatch) => {
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/admin/ingredients/restaurant/${id}`,
                 {
                     headers: {
@@ -13,8 +13,8 @@ const getIngrdientOfRestaurant = ({id, jwt}) => {
                     }
                 }
             )
-            dispatch({type: GET_INGREDIENTS, payload: response})
-            console.log("get ingredients ", response)
+            dispatch({type: GET_INGREDIENTS, payload: data})
+            console.log("get ingredients ", data)
         } catch(error){
             console.log("error", error)
         }
@@ -22,21 +22,21 @@ const getIngrdientOfRestaurant = ({id, jwt}) => {
 }
 
 
-const createIngredient = ({data, jwt}) => {
+const createIngredient = ({reqData, jwt}) => {
     return async (dispatch) => {
         dispatch({type: CREATE_INGREDIENT_REQUEST})
         try{
-            const { response } = await api.post(
+            const { data } = await api.post(
                 `/api/admin/ingredients`,
-                data,
+                reqData,
                 {
                     headers: {
                         Authorization: `Bearer ${jwt}`
                     }
                 }
             )
-            dispatch({type: CREATE_INGREDIENT_SUCCESS, payload: response})
-            console.log("create ingredient ",response)
+            dispatch({type: CREATE_INGREDIENT_SUCCESS, payload: data})
+            console.log("create ingredient ",data)
         } catch(error){
             dispatch({type: CREATE_INGREDIENT_FAILURE, payload: error})
             console.log("error" ,error)
@@ -44,21 +44,21 @@ const createIngredient = ({data, jwt}) => {
     }
 }
 
-const createIngredientCategory = ({data, jwt}) => {
+const createIngredientCategory = ({reqData, jwt}) => {
     return async (dispatch) => {
         dispatch({type: CREATE_INGREDIENT_CATEGORY_REQUEST})
         try{
-            const { response } = await api.post(
+            const { data } = await api.post(
                 `/api/admin/ingredients/category`,
-                data,
+                reqData,
                 {
                     headers: {
                         Authorization: `Bearer ${jwt}`
                     }
                 }
             )
-            dispatch({type: CREATE_INGREDIENT_CATEGORY_SUCCESS, payload: response})
-            console.log("create ingredient category ",response)
+            dispatch({type: CREATE_INGREDIENT_CATEGORY_SUCCESS, payload: data})
+            console.log("create ingredient category ",data)
         } catch(error){
             dispatch({type: CREATE_INGREDIENT_CATEGORY_FAILURE, payload: error})
             console.log("error" ,error)
@@ -70,7 +70,7 @@ const getIngredientCategory = ({id, jwt}) => {
     return async (dispatch) => {
         dispatch({type: GET_INGREDIENT_CATEGORY_REQUEST})
         try{
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/admin/ingredients/restaurant/${id}/category`,
                 {
                     headers: {
@@ -78,8 +78,8 @@ const getIngredientCategory = ({id, jwt}) => {
                     }
                 }
             )
-            dispatch({type: GET_INGREDIENT_CATEGORY_SUCCESS, payload: response})
-            console.log("get ingredient category ",response)
+            dispatch({type: GET_INGREDIENT_CATEGORY_SUCCESS, payload: data})
+            console.log("get ingredient category ",data)
         } catch(error){
             dispatch({type: GET_INGREDIENT_CATEGORY_FAILURE, payload: error})
             console.log("error" ,error)
@@ -90,7 +90,7 @@ const getIngredientCategory = ({id, jwt}) => {
 export const updateStockOfIngredient = ({id, jwt}) => {
     return async (dispatch) => {
         try{
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/admin/ingredients/${id}/stock`,
                 {},
                 {
@@ -100,8 +100,8 @@ export const updateStockOfIngredient = ({id, jwt}) => {
                 }
             )
 
-            dispatch({type: UPDATE_STOCK, payload: response})
-            console.log("update stock ",response)
+            dispatch({type: UPDATE_STOCK, payload: data})
+            console.log("update stock ",data)
         } catch(error){
             console.log("error ",error)
         }

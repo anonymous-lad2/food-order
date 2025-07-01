@@ -146,7 +146,7 @@ export const createEventAction = ({data, jwt, restaurantId}) => {
     return async(dispatch) => {
         try{
             dispatch({type: CREATE_EVENTS_REQUEST})
-            const { response } = await api.put(
+            const { data } = await api.put(
                 `/api/admin/events/restaurant/${restaurantId}`,
                 data,
                 {
@@ -155,8 +155,8 @@ export const createEventAction = ({data, jwt, restaurantId}) => {
                     }
                 }
             )
-            console.log("create event action ",response)
-            dispatch({type: CREATE_EVENTS_SUCCESS, payload: response})
+            console.log("create event action ",data)
+            dispatch({type: CREATE_EVENTS_SUCCESS, payload: data})
         } catch(error){
             dispatch({type: CREATE_EVENTS_FAILURE, payload: error})
             console.log("Error ",error)
@@ -168,7 +168,7 @@ export const getAllEvents = ({ jwt }) => {
     return async(dispatch) => {
         try{
             dispatch({type: GET_ALL_EVENTS_REQUEST})
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/events`,
                 {
                     headers: {
@@ -176,8 +176,8 @@ export const getAllEvents = ({ jwt }) => {
                     }
                 }
             )
-            console.log("get all events ",response)
-            dispatch({type: GET_ALL_EVENTS_SUCCESS, payload: response})
+            console.log("get all events ",data)
+            dispatch({type: GET_ALL_EVENTS_SUCCESS, payload: data})
         } catch(error){
             dispatch({type: GET_ALL_EVENTS_FAILURE, payload: error})
             console.log("Error ",error)
@@ -189,7 +189,7 @@ export const deleteEventAction = ({ eventId, jwt }) => {
     return async(dispatch) => {
         try{
             dispatch({type: DELETE_EVENTS_REQUEST})
-            const { response } = await api.delete(
+            const { data } = await api.delete(
                 `/api/admin/events/${eventId}`,
                 {
                     headers: {
@@ -197,8 +197,8 @@ export const deleteEventAction = ({ eventId, jwt }) => {
                     }
                 }
             )
-            console.log("delete event ",response)
-            dispatch({type: DELETE_EVENTS_SUCCESS, payload: response})
+            console.log("delete event ",data)
+            dispatch({type: DELETE_EVENTS_SUCCESS, payload: data})
         } catch(error){
             dispatch({type: DELETE_EVENTS_FAILURE, payload: error})
             console.log("Error ",error)
@@ -210,7 +210,7 @@ export const getRestaurantsEvents = ({ restaurantId, jwt }) => {
     return async(dispatch) => {
         try{
             dispatch({type: GET_RESTAURANTS_EVENTS_REQUEST})
-            const { response } = await api.get(
+            const { data } = await api.get(
                 `/api/admin/events/restaurant/${restaurantId}`,
                 {
                     headers: {
@@ -218,8 +218,8 @@ export const getRestaurantsEvents = ({ restaurantId, jwt }) => {
                     }
                 }
             )
-            console.log("get restaurant event ",response)
-            dispatch({type: GET_RESTAURANTS_EVENTS_SUCCESS, payload: response})
+            console.log("get restaurant event ",data)
+            dispatch({type: GET_RESTAURANTS_EVENTS_SUCCESS, payload: data})
         } catch(error){
             dispatch({type: GET_RESTAURANTS_EVENTS_FAILURE, payload: error})
             console.log("Error ",error)
@@ -231,7 +231,7 @@ export const createCategoryAction = ({reqData, jwt}) => {
     return async(dispatch) => {
         dispatch({type: CREATE_CATEGORY_REQUEST})
         try{
-            const { response } = await api.post(
+            const { data } = await api.post(
                 '/api/admin/category',
                 reqData,{
                     headers:{
@@ -239,8 +239,8 @@ export const createCategoryAction = ({reqData, jwt}) => {
                     }
                 }
             )
-            dispatch({type: CREATE_CATEGORY_SUCCESS, payload: response})
-            console.log("create category ",response)
+            dispatch({type: CREATE_CATEGORY_SUCCESS, payload: data})
+            console.log("create category ",data)
         } catch(error){
             dispatch({type: CREATE_CATEGORY_FAILURE, payload: error})
             console.log("create category ", error)
@@ -252,7 +252,7 @@ export const getRestaurantsCategory = ({ jwt, restaurantId }) => {
     return async(dispatch) => {
         dispatch({type: GET_RESTAURANTS_CATEGORY_REQUEST})
         try{
-            const { response } = api.get(
+            const { data } = await api.get(
                 `/api/category/restaurant/${restaurantId}`,
                 {
                     headers:{
@@ -260,11 +260,11 @@ export const getRestaurantsCategory = ({ jwt, restaurantId }) => {
                     }
                 }
             )
-            dispatch({type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: response})
-            console.log("get category ",response)
+            dispatch({type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: data})
+            console.log("get category ",data)
         } catch(error){
-            dispatch({type: GET_RESTAURANTS_CATEGORY_FAILURE, payload: error})
             console.log("get category ", error)
+            dispatch({type: GET_RESTAURANTS_CATEGORY_FAILURE, payload: error})
         }
     }
 }
