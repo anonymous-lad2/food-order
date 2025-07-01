@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { categorizeIngredients } from "../../utils/categorizeIngredients";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../State/Cart/Action";
 
 const ingredients = [
     {
@@ -34,8 +37,31 @@ const demo = [
 
 const MenuCard = ({item}) => {
 
-    const handleCheckBoxChange = (ingredient) => {
-        console.log(ingredient);
+    const [selectedIngredients, setSelectedIngredients] = useState([])
+
+    const dispatch = useDispatch();
+
+    const handleCheckBoxChange = (itemName) => {
+        console.log(itemName);
+        if(selectedIngredients.includes(itemName)){
+            setSelectedIngredients(selectedIngredients.filter((item) => item!==itemName))
+        }
+        else{
+            setSelectedIngredients(...selectedIngredients, itemName)
+        }
+    }
+
+    const handleAddItemToCart = (e) => {
+        e.preventDefault()
+        const reqData = {
+            token: localStorage.getItem("jwt"),
+            cartItem: {
+                foodId: item.id,
+                quantity: 1,
+                ingredients: selectedIngredients
+            }
+        }
+        dispatch(addItemToCart(reqData))
     }
 
   return (
@@ -67,7 +93,7 @@ const MenuCard = ({item}) => {
         </AccordionSummary>
 
         <AccordionDetails>
-          <form>
+          <form onSubmit={handleAddItemToCart}>
             <div className="flex gap-5 flex-wrap">
                 {
                     Object.keys(categorizeIngredients(item.ingredients)).map((category) => (
