@@ -6,6 +6,7 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { Button, Card, Box, TextField } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 
 export const style = {
   position: "absolute",
@@ -37,7 +38,9 @@ const items = [1, 1, 1, 1, 1];
 const Cart = () => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const {cart} = useSelector(store => store)
   const createdOrderUsingSelectedAddress = () => {};
+
 
   const handleSubmit = (value) => {
     console.log("formValue : ", value);
@@ -51,8 +54,8 @@ const Cart = () => {
     <div>
       <main className="lg:flex justify-between">
         <section className="lg:w-[30%] space-y-6 lg:min-h-screeen pt-10">
-          {items.map((item) => (
-            <CartItem />
+          {cart?.cartItems.map((item) => (
+            <CartItem item={item}/>
           ))}
 
           <Divider />
@@ -62,21 +65,21 @@ const Cart = () => {
             <div className="space-y-3">
               <div className="flex justify-between text-gray-400">
                 <p>Item Total</p>
-                <p>₹5000</p>
+                <p>₹{cart?.cart?.total}</p>
               </div>
               <div className="flex justify-between text-gray-400">
                 <p>Delivery Fee</p>
-                <p>₹500</p>
+                <p>₹21</p>
               </div>
               <div className="flex justify-between text-gray-400">
                 <p>GST and Restaurant Charges</p>
-                <p>₹200</p>
+                <p>₹33</p>
               </div>
               <Divider />
             </div>
             <div className="flex justify-between text-gray-400">
               <p>Total Pay</p>
-              <p>₹5700</p>
+              <p>₹{cart?.cart?.total + 33 + 21}</p>
             </div>
           </div>
         </section>

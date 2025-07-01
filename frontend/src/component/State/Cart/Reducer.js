@@ -37,12 +37,23 @@ const cartReducer = (state = initialState, action) => {
                 cartItems: [action.payload, ...state.cartItems]
             }
 
-        case UPDATE_CARTITEM_SUCCESS:
+        case UPDATE_CARTITEM_SUCCESS: {
+            const updatedItems = state.cartItems.map((item) =>
+                item.id === action.payload.id ? action.payload : item
+            );
+
+            const newTotal = updatedItems.reduce((sum, item) => sum + item.totalPrice, 0);
+
             return {
                 ...state,
                 loading: false,
-                cartItems: state.cartItems.map((item) => item.id === action.payload.id ? action.payload : item)
-            }
+                cartItems: updatedItems,
+                cart: {
+                ...state.cart,
+                total: newTotal,
+                },
+            };
+        }
 
         case REMOVE_CARTITEM_SUCCESS:
             return {

@@ -41,15 +41,13 @@ const MenuCard = ({item}) => {
 
     const dispatch = useDispatch();
 
-    const handleCheckBoxChange = (itemName) => {
-        console.log(itemName);
-        if(selectedIngredients.includes(itemName)){
-            setSelectedIngredients(selectedIngredients.filter((item) => item!==itemName))
-        }
-        else{
-            setSelectedIngredients(...selectedIngredients, itemName)
-        }
-    }
+    const handleCheckBoxChange = (item) => {
+  if (selectedIngredients.includes(item.name)) {
+    setSelectedIngredients(selectedIngredients.filter(i => i !== item.name));
+  } else {
+    setSelectedIngredients([...selectedIngredients, item.name]);
+  }
+};
 
     const handleAddItemToCart = (e) => {
         e.preventDefault()

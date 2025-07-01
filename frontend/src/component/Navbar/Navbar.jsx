@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const Navbar = () => {
-  const { auth } = useSelector(store => store)
+  const { auth, cart } = useSelector(store => store)
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
@@ -41,8 +41,8 @@ export const Navbar = () => {
             </IconButton>}
         </div>
         <div>
-            <IconButton>
-                <Badge badgeContent={4} sx={{
+            <IconButton onClick={() => navigate('/cart')}>
+                <Badge badgeContent={cart?.cartItems.length} sx={{
                     "& .MuiBadge-badge": {
                     backgroundColor: "#242B2E",
                     color: "white",
