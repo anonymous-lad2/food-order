@@ -3,7 +3,9 @@ package com.happysat.controller;
 import com.happysat.model.Order;
 import com.happysat.model.User;
 import com.happysat.request.OrderRequest;
+import com.happysat.response.PaymentResponse;
 import com.happysat.service.OrderService;
+import com.happysat.service.PaymentService;
 import com.happysat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,19 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/order")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest req,
-                                                  @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<PaymentResponse> createOrder(@RequestBody OrderRequest req,
+                                                       @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
         Order order = orderService.createOrder(req, user);
-
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        PaymentResponse response = paymentService.createPaymentLink(order);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/order/user")
