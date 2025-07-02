@@ -13,6 +13,9 @@ export const createOrder = (reqData) => {
                     }
                 }
             )
+            if(data.paymentUrl){
+                window.location.href = data.paymentUrl;
+            }
             dispatch({type: CREATE_ORDER_SUCCESS, payload: data})
             console.log("create order ",data)
         } catch(error){
