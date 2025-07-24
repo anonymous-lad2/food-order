@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { Button, CircularProgress, Grid, IconButton, TextField } from '@mui/material'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
+import { uploadImageToCloudinary } from '../Admin/util/UploadToCloudinary';
 
 const initialValues = {
   name: '',
@@ -51,12 +52,18 @@ const CreateRestaurantForm = () => {
       console.log(data)
     }
   })
-  const handleImageChange = (e) => {
-
+  const handleImageChange = async(e) => {
+    const file = e.target.files[0];
+    setUploadImage(true);
+    const image = await uploadImageToCloudinary(file)
+    formik.setFieldValue('images', [...formik.values.images, image]);
+    setUploadImage(false);
   }
 
   const handleRemoveImage = (index) => {
-
+    const updatedImages = [...formik.values.images];
+    updatedImages.splice(index, 1);
+    formik.setFieldValue('images', updatedImages);
   }
   return (
     <div className='py-10 px-5 lg:flex items-center justify-center min-h-screen'>
@@ -87,9 +94,9 @@ const CreateRestaurantForm = () => {
             </label>
 
             <div className='flex flex-wrap gap-2'> 
-              {[1,1,1,1,1,1].map((image, index) => (<div className='relative'> 
+              {formik.values.images.map((image, index) => (<div className='relative'> 
                   <img className='w-24 h-24 object-cover' key={index} 
-                    src='https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg'/>
+                    src={image}/>
                     <IconButton size='small' sx={{position: 'absolute', top: 0, right: 0, outline: 'none'}} onClick={() => handleRemoveImage(index)}>
                       <CloseIcon sx={{fontSize: '1rem'}}/>
                     </IconButton>
@@ -115,7 +122,7 @@ const CreateRestaurantForm = () => {
               label='Description'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.description}
             />
           </Grid>
 
@@ -126,7 +133,7 @@ const CreateRestaurantForm = () => {
               label='Cuisine Type'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.cuisineType}
             />
           </Grid>
 
@@ -137,7 +144,7 @@ const CreateRestaurantForm = () => {
               label='Opening Hours'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.openingHours}
             />
           </Grid>
 
@@ -148,7 +155,7 @@ const CreateRestaurantForm = () => {
               label='Street Address'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.streetAddress}
             />
           </Grid>
 
@@ -159,7 +166,7 @@ const CreateRestaurantForm = () => {
               label='City'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.city}
             />
           </Grid>
 
@@ -170,7 +177,7 @@ const CreateRestaurantForm = () => {
               label='State/Province'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.stateProvince}
             />
           </Grid>
 
@@ -181,7 +188,7 @@ const CreateRestaurantForm = () => {
               label='Postal Code'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.postalCode}
             />
           </Grid>
 
@@ -192,7 +199,7 @@ const CreateRestaurantForm = () => {
               label='Country'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.country}
             />
           </Grid>
 
@@ -203,7 +210,7 @@ const CreateRestaurantForm = () => {
               label='Email'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.email}
             />
           </Grid>
 
@@ -214,7 +221,7 @@ const CreateRestaurantForm = () => {
               label='Mobile'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.mobile}
             />
           </Grid>
 
@@ -225,7 +232,7 @@ const CreateRestaurantForm = () => {
               label='Instagram'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.instagram}
             />
           </Grid>
 
@@ -236,7 +243,7 @@ const CreateRestaurantForm = () => {
               label='Twitter'
               variant='outlined'
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.twitter}
             />
           </Grid>
           
