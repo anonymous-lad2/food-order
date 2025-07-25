@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAllRestaurantsAction } from '../State/Restaurant/Action';
 import { useNavigate } from 'react-router-dom';
 
-const restaurants = [1,1,1,1,1,1,1,1];
 export const Home = () => {
     
     const dispatch = useDispatch();
@@ -15,8 +14,10 @@ export const Home = () => {
     console.log("restaurant ",restaurant)
 
     useEffect(() => {
-        dispatch(getAllRestaurantsAction(jwt))
-    }, [])
+        if(jwt){
+            dispatch(getAllRestaurantsAction(jwt))
+        }
+    },[jwt])
 
     
   return (
